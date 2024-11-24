@@ -213,6 +213,20 @@ int loadUserCount()
     return count;
 }
 
+bool CheckId(const string& id) {
+    ifstream file("userdetails.txt");
+    string line;
+
+    while (getline(file, line)) {
+        if (line.find(id) != string::npos) {
+            file.close();
+            return true;
+        }
+    }
+    file.close();
+    return false;
+}
+
 void saveUserDetails(user userDetails[], int count)
 {
     ofstream file("userdetails.txt");
@@ -240,63 +254,6 @@ void loadUserDetails(user userDetails[], int count)
         }
         file.close();
     }
-}
-string generateid(string &s, string &t)
-{
-    int n = s.size();
-    int m = t.size();
-    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= m; j++)
-        {
-            if (s[i - 1] == t[j - 1])
-            {
-                dp[i][j] = dp[i - 1][j - 1] + 1;
-            }
-            else
-            {
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
-            }
-        }
-    }
-    int res = dp[n][m];
-    string ans = "";
-    int i = n, j = m;
-    while (i > 0 && j > 0)
-    {
-        if (s[i - 1] == t[j - 1])
-        {
-            ans += s[i - 1];
-            i--;
-            j--;
-        }
-        else
-        {
-            if (dp[i - 1][j] > dp[i][j - 1])
-            {
-                ans += s[i - 1];
-                i--;
-            }
-            else
-            {
-                ans += t[j - 1];
-                j--;
-            }
-        }
-    }
-    while (i > 0)
-    {
-        ans += s[i - 1];
-        i--;
-    }
-    while (j > 0)
-    {
-        ans += t[j - 1];
-        j--;
-    }
-    reverse(ans.begin(), ans.end());
-    return ans;
 }
 int main()
 {
@@ -342,22 +299,22 @@ int main()
     cout << endl;
     cout << endl;
     cout << endl;
-    std::cout << "*SEC-51-------------------------------------------------------*dhruvnagar" << std::endl;
-    std::cout << "     \\ \\                                                      /" << std::endl;
-    std::cout << "      \\  *SEC-50--------------------------------------*vanasthalicenter" << std::endl;
-    std::cout << "       \\   |   *SEC-101" << std::endl;
-    std::cout << "        |   |   /    SEC-81----------------------------------------------------- khazi" << std::endl;
-    std::cout << "        |   |  /             *NSEZ" << std::endl;
-    std::cout << "        *sec93-------------------\\--------------------------*SEC-83 " << std::endl;
-    std::cout << "            \\                     *SEC-137" << std::endl;
-    std::cout << "             \\                              *SEC-142----------------------------*rupamnagar" << std::endl;
-    std::cout << "              \\                                     *SEC-143" << std::endl;
-    std::cout << "               \\                                             *SEC-144" << std::endl;
-    std::cout << "               *reva                                                    *SEC-145" << std::endl;
-    std::cout << "                                                                              *SEC-147" << std::endl;
-    std::cout << "                                                                                     *SEC-148--------------*PARI CHOWK" << std::endl;
-    std::cout << "                                                                                           \\               /" << std::endl;
-    std::cout << "                                                                                            *KNOWLEDGE PARK" << std::endl;
+    cout << "*SEC-51-------------------------------------------------------*dhruvnagar" << std::endl;
+    cout << "     \\ \\                                                      /" << std::endl;
+    cout << "      \\  *SEC-50--------------------------------------*vanasthalicenter" << std::endl;
+    cout << "       \\   |   *SEC-101" << std::endl;
+    cout << "        |   |   /    SEC-81----------------------------------------------------- khazi" << std::endl;
+    cout << "        |   |  /             *NSEZ" << std::endl;
+    cout << "        *sec93-------------------\\--------------------------*SEC-83 " << std::endl;
+    cout << "            \\                     *SEC-137" << std::endl;
+    cout << "             \\                              *SEC-142----------------------------*rupamnagar" << std::endl;
+    cout << "              \\                                     *SEC-143" << std::endl;
+    cout << "               \\                                             *SEC-144" << std::endl;
+    cout << "               *reva                                                    *SEC-145" << std::endl;
+    cout << "                                                                              *SEC-147" << std::endl;
+    cout << "                                                                                     *SEC-148--------------*PARI CHOWK" << std::endl;
+    cout << "                                                                                           \\               /" << std::endl;
+    cout << "                                                                                            *KNOWLEDGE PARK" << std::endl;
 
     cout << endl
          << ".......................................................................................................................\n ";
@@ -426,13 +383,20 @@ int main()
         string id;
         string name;
         int card = rand() % 224;
+        while(true)
+        {
+            cout<<"\n enter Userid : ";
+            cin>>id;
+            if(CheckId(id))
+            cout<<"\n ID already exists , please enter another id \n";
+            else 
+            break;
+        }
         cout << "\n enter name : ";
         cin >> name;
         cout << "\n enter password : ";
         cin >> password;
-        id = generateid(name, password);
         cout << "\n your userid id is " << id;
-
         cout << "\n here this is your metro card no. " << card << " so that now we can  link your journey safely with us \n";
 
         // Update user details
