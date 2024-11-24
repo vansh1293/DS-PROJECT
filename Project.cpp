@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <conio.h>
 using namespace std;
 
 class station
@@ -75,12 +76,12 @@ void populatestation(station &metroSystem)
      }*/
 }
 // Function to perform depth-first search and find all paths
-vector<vector<int> > findAllPaths(int source, int destination, unordered_map<int, set<pair<int, int> > > &adjList)
+vector<vector<int>> findAllPaths(int source, int destination, unordered_map<int, set<pair<int, int>>> &adjList)
 {
-    stack<pair<int, vector<int> > > stk;
+    stack<pair<int, vector<int>>> stk;
     stk.push({source, {source}});
 
-    vector<vector<int> > allPaths;
+    vector<vector<int>> allPaths;
 
     while (!stk.empty())
     {
@@ -107,7 +108,7 @@ vector<vector<int> > findAllPaths(int source, int destination, unordered_map<int
 
     return allPaths;
 }
-void preparelist(unordered_map<int, set<pair<int, int> > > &adjlist)
+void preparelist(unordered_map<int, set<pair<int, int>>> &adjlist)
 {
     adjlist[1].insert({{2, 15}, {3, 3}, {9, 8}});
     adjlist[2].insert({{1, 15}, {4, 2}});
@@ -132,7 +133,7 @@ void preparelist(unordered_map<int, set<pair<int, int> > > &adjlist)
     adjlist[21].insert({{19, 1}, {20, 2}});
 }
 
-void print(unordered_map<int, set<pair<int, int> > > adjlist)
+void print(unordered_map<int, set<pair<int, int>>> adjlist)
 {
     for (auto i : adjlist)
     {
@@ -145,7 +146,7 @@ void print(unordered_map<int, set<pair<int, int> > > adjlist)
     }
 }
 
-vector<int> shortestdistance(unordered_map<int, set<pair<int, int> > > adjlist, int source)
+vector<int> shortestdistance(unordered_map<int, set<pair<int, int>>> adjlist, int source)
 {
     vector<int> distance(adjlist.size() + 1, INT_MAX);
     distance[source] = 0; // Set the distance of the source node to 0
@@ -213,12 +214,15 @@ int loadUserCount()
     return count;
 }
 
-bool CheckId(const string& id) {
+bool CheckId(const string &id)
+{
     ifstream file("userdetails.txt");
     string line;
 
-    while (getline(file, line)) {
-        if (line.find(id) != string::npos) {
+    while (getline(file, line))
+    {
+        if (line.find(id) != string::npos)
+        {
             file.close();
             return true;
         }
@@ -320,7 +324,7 @@ int main()
          << ".......................................................................................................................\n ";
     station metrosystem;
     populatestation(metrosystem);
-    unordered_map<int, set<pair<int, int> > > adjlist;
+    unordered_map<int, set<pair<int, int>>> adjlist;
     preparelist(adjlist);
     print(adjlist);
     cout << "\n hopefully, now you must be aware of all metro system ";
@@ -353,8 +357,37 @@ int main()
         cin >> id;
         cout << "enter name ";
         cin >> name;
-        cout << "enter password";
-        cin >> password;
+        int i = 0;
+        char temp2;
+
+        cout << "Enter Password: ";
+        while (1)
+        {
+            temp2 = _getch(); // Read a single character
+            if (temp2 == '\r')
+            {                       // Enter key
+                password[i] = '\0'; // Null-terminate the password
+                break;
+            }
+            else if (temp2 == '\b')
+            { // Backspace key
+                if (i > 0)
+                {
+                    i--;
+                    cout << "\b \b"; // Move back, overwrite with a space, and move back again
+                }
+            }
+            else if (temp2 == '\t' || temp2 == ' ')
+            { // Ignore tabs and spaces
+                continue;
+            }
+            else
+            {
+                password[i] = temp2;
+                i++;
+                cout << "*"; // Print an asterisk for each character
+            }
+        }
         int just = 1;
         for (int i = 0; i < usercount; i++)
         {
@@ -383,19 +416,48 @@ int main()
         string id;
         string name;
         int card = rand() % 224;
-        while(true)
+        while (true)
         {
-            cout<<"\n enter Userid : ";
-            cin>>id;
-            if(CheckId(id))
-            cout<<"\n ID already exists , please enter another id \n";
-            else 
-            break;
+            cout << "\n enter Userid : ";
+            cin >> id;
+            if (CheckId(id))
+                cout << "\n ID already exists , please enter another id \n";
+            else
+                break;
         }
         cout << "\n enter name : ";
         cin >> name;
         cout << "\n enter password : ";
-        cin >> password;
+        int i = 0;
+        char temp2;
+        cout << "Enter Password: ";
+        while (1)
+        {
+            temp2 = _getch(); // Read a single character
+            if (temp2 == '\r')
+            {                       // Enter key
+                password[i] = '\0'; // Null-terminate the password
+                break;
+            }
+            else if (temp2 == '\b')
+            { // Backspace key
+                if (i > 0)
+                {
+                    i--;
+                    cout << "\b \b"; // Move back, overwrite with a space, and move back again
+                }
+            }
+            else if (temp2 == '\t' || temp2 == ' ')
+            { // Ignore tabs and spaces
+                continue;
+            }
+            else
+            {
+                password[i] = temp2;
+                i++;
+                cout << "*"; // Print an asterisk for each character
+            }
+        }
         cout << "\n your userid id is " << id;
         cout << "\n here this is your metro card no. " << card << " so that now we can  link your journey safely with us \n";
 
