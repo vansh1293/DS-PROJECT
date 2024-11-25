@@ -427,7 +427,7 @@ int main()
         }
         cout << "\n enter name : ";
         cin >> name;
-        cout << "\n enter password : ";
+        // cout << "\n enter password : ";
         int i = 0;
         char temp2;
         cout << "Enter Password: ";
